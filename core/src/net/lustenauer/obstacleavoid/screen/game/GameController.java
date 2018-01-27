@@ -62,8 +62,6 @@ public class GameController {
 
         // create background
         background = factory.createBackground();
-        background.setPosition(0f, 0f);
-        background.setSize(GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT);
 
         hitSound = assetManager.get(AssetDescriptors.HIT_SOUND);
     }

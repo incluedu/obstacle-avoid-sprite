@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import net.lustenauer.obstacleavoid.assets.AssetDescriptors;
 import net.lustenauer.obstacleavoid.assets.RegionNames;
+import net.lustenauer.obstacleavoid.config.GameConfig;
 import net.lustenauer.obstacleavoid.entity.ObstacleSprite;
 import net.lustenauer.obstacleavoid.entity.PlayerSprite;
 
@@ -63,9 +64,12 @@ public class EntityFactory {
         return obstacleSprite;
     }
 
-    public Sprite createBackground(){
+    public Sprite createBackground() {
         TextureRegion backgroundRegion = gamePlayAtlas.findRegion(RegionNames.BACKGROUND);
-        return new Sprite(backgroundRegion);
+        Sprite background = new Sprite(backgroundRegion);
+        background.setPosition(0f, 0f);
+        background.setSize(GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT);
+        return background;
     }
 
     public void free(ObstacleSprite obstacleSprite) {
