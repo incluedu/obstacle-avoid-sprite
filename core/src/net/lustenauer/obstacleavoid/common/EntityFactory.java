@@ -1,6 +1,7 @@
 package net.lustenauer.obstacleavoid.common;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
@@ -60,6 +61,11 @@ public class EntityFactory {
         ObstacleSprite obstacleSprite = obstaclePool.obtain();
         obstacleSprite.setRegion(obstacleRegion);
         return obstacleSprite;
+    }
+
+    public Sprite createBackground(){
+        TextureRegion backgroundRegion = gamePlayAtlas.findRegion(RegionNames.BACKGROUND);
+        return new Sprite(backgroundRegion);
     }
 
     public void free(ObstacleSprite obstacleSprite) {

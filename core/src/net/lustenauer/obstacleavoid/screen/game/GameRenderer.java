@@ -4,7 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
@@ -12,13 +15,9 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import net.lustenauer.obstacleavoid.assets.AssetDescriptors;
-import net.lustenauer.obstacleavoid.assets.RegionNames;
 import net.lustenauer.obstacleavoid.config.GameConfig;
 import net.lustenauer.obstacleavoid.entity.ObstacleSprite;
 import net.lustenauer.obstacleavoid.entity.PlayerSprite;
-import net.lustenauer.obstacleavoid.entity._old.Background;
-import net.lustenauer.obstacleavoid.entity._old.Obstacle;
-import net.lustenauer.obstacleavoid.entity._old.Player;
 import net.lustenauer.obstacolavoid.util.GdxUtils;
 import net.lustenauer.obstacolavoid.util.ViewportUtils;
 import net.lustenauer.obstacolavoid.util.debug.DebugCameraController;
@@ -115,8 +114,8 @@ public class GameRenderer implements Disposable {
         batch.begin();
 
         //draw background
-//        Background background = controller.getBackground();
-//        batch.draw(backgroundRegion, background.getX(), background.getY(), background.getWidth(), background.getHeight());
+        Sprite background = controller.getBackground();
+        background.draw(batch);
 
         //draw player
         PlayerSprite player = controller.getPlayer();

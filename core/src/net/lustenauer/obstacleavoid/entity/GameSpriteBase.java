@@ -52,6 +52,18 @@ public abstract class GameSpriteBase extends Sprite {
         updateBounds();
     }
 
+    @Override
+    public void setX(float x) {
+        super.setX(x);
+        updateBounds();
+    }
+
+    @Override
+    public void setY(float y) {
+        super.setY(y);
+        updateBounds();
+    }
+
     public void drawDebug(ShapeRenderer renderer) {
         renderer.circle(bounds.x, bounds.y, bounds.radius, 30);
     }

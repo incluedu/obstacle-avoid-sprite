@@ -4,11 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Logger;
-import com.badlogic.gdx.utils.Pool;
-import com.badlogic.gdx.utils.Pools;
 import net.lustenauer.obstacleavoid.ObstacleAvoidGame;
 import net.lustenauer.obstacleavoid.assets.AssetDescriptors;
 import net.lustenauer.obstacleavoid.common.EntityFactory;
@@ -17,9 +16,6 @@ import net.lustenauer.obstacleavoid.config.DifficultyLevel;
 import net.lustenauer.obstacleavoid.config.GameConfig;
 import net.lustenauer.obstacleavoid.entity.ObstacleSprite;
 import net.lustenauer.obstacleavoid.entity.PlayerSprite;
-import net.lustenauer.obstacleavoid.entity._old.Background;
-import net.lustenauer.obstacleavoid.entity._old.Obstacle;
-import net.lustenauer.obstacleavoid.entity._old.Player;
 
 /**
  * Created by Patric Hollenstein on 07.01.18.
@@ -33,7 +29,7 @@ public class GameController {
     // == attributes ==
     private PlayerSprite player;
     private Array<ObstacleSprite> obstacles = new Array<ObstacleSprite>();
-    private Background background;
+    private Sprite background;
     private float obstacleTimer;
     private float scoreTimer;
     private int lives = GameConfig.LIVES_START;
@@ -65,7 +61,7 @@ public class GameController {
 
 
         // create background
-        background = new Background();
+        background = factory.createBackground();
         background.setPosition(0f, 0f);
         background.setSize(GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT);
 
@@ -104,7 +100,7 @@ public class GameController {
         return obstacles;
     }
 
-    public Background getBackground() {
+    public Sprite getBackground() {
         return background;
     }
 
@@ -129,14 +125,12 @@ public class GameController {
     }
 
     private boolean isPlayerCollidingWithObstacle() {
-/*
-        for (Obstacle obstacle : obstacles) {
+        for (ObstacleSprite obstacle : obstacles) {
             if (obstacle.isNotHit() && obstacle.isPlayerColliding(player)) {
                 hitSound.play();
                 return true;
             }
         }
-*/
         return false;
     }
 
