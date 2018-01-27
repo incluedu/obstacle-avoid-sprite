@@ -39,7 +39,6 @@ public class GameController {
     private int lives = GameConfig.LIVES_START;
     private int score;
     private int displayScore;
-    private Pool<ObstacleSprite> obstaclePool;
     private Sound hitSound;
 
     private final float startPlayerX = (GameConfig.WORLD_WIDTH - GameConfig.PLAYER_SIZE) / 2f;
@@ -64,8 +63,6 @@ public class GameController {
         player = factory.createPlayer();
         player.setPosition(startPlayerX, startPlayerY);
 
-        // create obstacle pool
-        obstaclePool = Pools.get(ObstacleSprite.class, 40);
 
         // create background
         background = new Background();
@@ -125,7 +122,7 @@ public class GameController {
 
     // == private methodes ==
     private void restart() {
-        obstaclePool.freeAll(obstacles);
+        factory.freeAll(obstacles);
         obstacles.clear();
         player.setPosition(startPlayerX, startPlayerY);
 
@@ -198,7 +195,7 @@ public class GameController {
             float obstacleX = MathUtils.random(min, max);
             float obstacleY = GameConfig.WORLD_HEIGHT;
 
-            ObstacleSprite obstacle = obstaclePool.obtain();
+            ObstacleSprite obstacle = factory.obtain();
             DifficultyLevel difficultyLevel = GameManager.INSTANCE.getDifficultyLevel();
             obstacle.setYSpeed(difficultyLevel.getObstacleSpeed());
             obstacle.setPosition(obstacleX, obstacleY);
@@ -216,7 +213,7 @@ public class GameController {
 
             if (firstObstacle.getY() < minObstacleY) {
                 obstacles.removeValue(firstObstacle, true);
-                obstaclePool.free(firstObstacle);
+                factory.free(firstObstacle);
             }
         }
     }
