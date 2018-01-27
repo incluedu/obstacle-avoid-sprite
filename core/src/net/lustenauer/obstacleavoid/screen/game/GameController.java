@@ -15,6 +15,7 @@ import net.lustenauer.obstacleavoid.common.EntityFactory;
 import net.lustenauer.obstacleavoid.common.GameManager;
 import net.lustenauer.obstacleavoid.config.DifficultyLevel;
 import net.lustenauer.obstacleavoid.config.GameConfig;
+import net.lustenauer.obstacleavoid.entity.ObstacleSprite;
 import net.lustenauer.obstacleavoid.entity.PlayerSprite;
 import net.lustenauer.obstacleavoid.entity._old.Background;
 import net.lustenauer.obstacleavoid.entity._old.Obstacle;
@@ -31,14 +32,14 @@ public class GameController {
 
     // == attributes ==
     private PlayerSprite player;
-    private Array<Obstacle> obstacles = new Array<Obstacle>();
+    private Array<ObstacleSprite> obstacles = new Array<ObstacleSprite>();
     private Background background;
     private float obstacleTimer;
     private float scoreTimer;
     private int lives = GameConfig.LIVES_START;
     private int score;
     private int displayScore;
-    private Pool<Obstacle> obstaclePool;
+    private Pool<ObstacleSprite> obstaclePool;
     private Sound hitSound;
 
     private final float startPlayerX = (GameConfig.WORLD_WIDTH - GameConfig.PLAYER_SIZE) / 2f;
@@ -64,7 +65,7 @@ public class GameController {
         player.setPosition(startPlayerX, startPlayerY);
 
         // create obstacle pool
-        obstaclePool = Pools.get(Obstacle.class, 40);
+        obstaclePool = Pools.get(ObstacleSprite.class, 40);
 
         // create background
         background = new Background();
@@ -81,7 +82,7 @@ public class GameController {
         }
 
         updatePlayer(delta);
-        // updateObstacles(delta);
+        updateObstacles(delta);
         updateScore(delta);
         updateDisplayScore(delta);
 
@@ -102,7 +103,7 @@ public class GameController {
         return player;
     }
 
-    public Array<Obstacle> getObstacles() {
+    public Array<ObstacleSprite> getObstacles() {
         return obstacles;
     }
 
@@ -178,7 +179,7 @@ public class GameController {
 
     private void updateObstacles(float delta) {
 
-        for (Obstacle obstacle : obstacles) {
+        for (ObstacleSprite obstacle : obstacles) {
             obstacle.update();
         }
 
@@ -197,7 +198,7 @@ public class GameController {
             float obstacleX = MathUtils.random(min, max);
             float obstacleY = GameConfig.WORLD_HEIGHT;
 
-            Obstacle obstacle = obstaclePool.obtain();
+            ObstacleSprite obstacle = obstaclePool.obtain();
             DifficultyLevel difficultyLevel = GameManager.INSTANCE.getDifficultyLevel();
             obstacle.setYSpeed(difficultyLevel.getObstacleSpeed());
             obstacle.setPosition(obstacleX, obstacleY);
@@ -209,7 +210,7 @@ public class GameController {
 
     private void removePassedObstacles() {
         if (obstacles.size > 0) {
-            Obstacle firstObstacle = obstacles.first();
+            ObstacleSprite firstObstacle = obstacles.first();
 
             float minObstacleY = -GameConfig.OBSTACLE_SIZE;
 

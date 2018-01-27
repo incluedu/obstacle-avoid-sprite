@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import net.lustenauer.obstacleavoid.assets.AssetDescriptors;
 import net.lustenauer.obstacleavoid.assets.RegionNames;
 import net.lustenauer.obstacleavoid.config.GameConfig;
+import net.lustenauer.obstacleavoid.entity.ObstacleSprite;
 import net.lustenauer.obstacleavoid.entity.PlayerSprite;
 import net.lustenauer.obstacleavoid.entity._old.Background;
 import net.lustenauer.obstacleavoid.entity._old.Obstacle;
@@ -44,10 +45,6 @@ public class GameRenderer implements Disposable {
     private final AssetManager assetManager;
     private final SpriteBatch batch;
 
-    private TextureRegion playerRegion;
-    private TextureRegion obstacleRegion;
-    private TextureRegion backgroundRegion;
-
     // == constructors ==
     public GameRenderer(SpriteBatch batch, AssetManager assetManager, GameController controller) {
         this.batch = batch;
@@ -69,11 +66,6 @@ public class GameRenderer implements Disposable {
         // create debug camera controller
         debugCameraController = new DebugCameraController();
         debugCameraController.setStartPosition(GameConfig.WORLD_CENTER_X, GameConfig.WORLD_CENTER_Y);
-
-        TextureAtlas gamePlayAtlas = assetManager.get(AssetDescriptors.GAME_PLAY);
-        playerRegion = gamePlayAtlas.findRegion(RegionNames.PLAYER);
-        obstacleRegion = gamePlayAtlas.findRegion(RegionNames.OBSTACLE);
-        backgroundRegion = gamePlayAtlas.findRegion(RegionNames.BACKGROUND);
     }
 
     // == public methodes ==
@@ -129,14 +121,11 @@ public class GameRenderer implements Disposable {
         //draw player
         PlayerSprite player = controller.getPlayer();
         player.draw(batch);
-        //batch.draw(playerRegion, player.getX(), player.getY(), player.getWidth(), player.getHeight());
 
         //draw obstacles
-/*
-        for (Obstacle obstacle : controller.getObstacles()) {
-            batch.draw(obstacleRegion, obstacle.getX(), obstacle.getY(), obstacle.getWidth(), obstacle.getHeight());
+        for (ObstacleSprite obstacle : controller.getObstacles()) {
+            obstacle.draw(batch);
         }
-*/
 
         batch.end();
     }
@@ -176,8 +165,8 @@ public class GameRenderer implements Disposable {
     private void drawDebug() {
         renderer.setColor(Color.RED);
         controller.getPlayer().drawDebug(renderer);
-//        for (Obstacle obstacle : controller.getObstacles()) {
-//            obstacle.drawDebug(renderer);
-//        }
+        for (ObstacleSprite obstacle : controller.getObstacles()) {
+            obstacle.drawDebug(renderer);
+        }
     }
 }
