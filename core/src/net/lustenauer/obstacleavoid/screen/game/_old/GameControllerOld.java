@@ -1,4 +1,4 @@
-package net.lustenauer.obstacleavoid.screen.game;
+package net.lustenauer.obstacleavoid.screen.game._old;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -11,11 +11,9 @@ import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.Pools;
 import net.lustenauer.obstacleavoid.ObstacleAvoidGame;
 import net.lustenauer.obstacleavoid.assets.AssetDescriptors;
-import net.lustenauer.obstacleavoid.common.EntityFactory;
 import net.lustenauer.obstacleavoid.common.GameManager;
 import net.lustenauer.obstacleavoid.config.DifficultyLevel;
 import net.lustenauer.obstacleavoid.config.GameConfig;
-import net.lustenauer.obstacleavoid.entity.PlayerSprite;
 import net.lustenauer.obstacleavoid.entity._old.Background;
 import net.lustenauer.obstacleavoid.entity._old.Obstacle;
 import net.lustenauer.obstacleavoid.entity._old.Player;
@@ -25,12 +23,13 @@ import net.lustenauer.obstacleavoid.entity._old.Player;
  *
  * @author Patric Hollenstein
  */
-public class GameController {
+@Deprecated
+public class GameControllerOld {
     // == constants ==
-    private static final Logger log = new Logger(GameController.class.getName(), Logger.DEBUG);
+    private static final Logger log = new Logger(GameControllerOld.class.getName(), Logger.DEBUG);
 
     // == attributes ==
-    private PlayerSprite player;
+    private Player player;
     private Array<Obstacle> obstacles = new Array<Obstacle>();
     private Background background;
     private float obstacleTimer;
@@ -45,22 +44,20 @@ public class GameController {
     private final float startPlayerY = 1 - GameConfig.PLAYER_SIZE / 2f;
     private final ObstacleAvoidGame game;
     private final AssetManager assetManager;
-    private final EntityFactory factory;
 
     // == constructors ==
 
 
-    public GameController(ObstacleAvoidGame game) {
+    public GameControllerOld(ObstacleAvoidGame game) {
         this.game = game;
         this.assetManager = game.getAssetManager();
-        factory = new EntityFactory(assetManager);
         init();
     }
 
     // == init ==
     private void init() {
         // create Player
-        player = factory.createPlayer();
+        player = new Player();
         player.setPosition(startPlayerX, startPlayerY);
 
         // create obstacle pool
@@ -81,7 +78,7 @@ public class GameController {
         }
 
         updatePlayer(delta);
-        // updateObstacles(delta);
+        updateObstacles(delta);
         updateScore(delta);
         updateDisplayScore(delta);
 
@@ -98,7 +95,7 @@ public class GameController {
         }
     }
 
-    public PlayerSprite getPlayer() {
+    public Player getPlayer() {
         return player;
     }
 
@@ -131,14 +128,12 @@ public class GameController {
     }
 
     private boolean isPlayerCollidingWithObstacle() {
-/*
         for (Obstacle obstacle : obstacles) {
             if (obstacle.isNotHit() && obstacle.isPlayerColliding(player)) {
                 hitSound.play();
                 return true;
             }
         }
-*/
         return false;
     }
 

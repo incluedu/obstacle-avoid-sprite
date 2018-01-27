@@ -1,4 +1,4 @@
-package net.lustenauer.obstacleavoid.entity;
+package net.lustenauer.obstacleavoid.entity._old;
 
 
 import net.lustenauer.obstacleavoid.config.GameConfig;
@@ -8,6 +8,7 @@ import net.lustenauer.obstacleavoid.config.GameConfig;
  *
  * @author Patric Hollenstein
  */
+@Deprecated
 public class Player extends GameObjectBase {
 
 

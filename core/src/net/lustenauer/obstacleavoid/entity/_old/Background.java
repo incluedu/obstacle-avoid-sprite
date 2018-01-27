@@ -1,10 +1,11 @@
-package net.lustenauer.obstacleavoid.entity;
+package net.lustenauer.obstacleavoid.entity._old;
 
 /**
  * Created by Patric Hollenstein on 07.01.18.
  *
  * @author Patric Hollenstein
  */
+@Deprecated
 public class Background {
 
     private float x;

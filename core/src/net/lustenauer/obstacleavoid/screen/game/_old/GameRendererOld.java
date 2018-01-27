@@ -1,8 +1,7 @@
-package net.lustenauer.obstacleavoid.screen.game;
+package net.lustenauer.obstacleavoid.screen.game._old;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -14,7 +13,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import net.lustenauer.obstacleavoid.assets.AssetDescriptors;
 import net.lustenauer.obstacleavoid.assets.RegionNames;
 import net.lustenauer.obstacleavoid.config.GameConfig;
-import net.lustenauer.obstacleavoid.entity.PlayerSprite;
 import net.lustenauer.obstacleavoid.entity._old.Background;
 import net.lustenauer.obstacleavoid.entity._old.Obstacle;
 import net.lustenauer.obstacleavoid.entity._old.Player;
@@ -27,7 +25,8 @@ import net.lustenauer.obstacolavoid.util.debug.DebugCameraController;
  *
  * @author Patric Hollenstein
  */
-public class GameRenderer implements Disposable {
+@Deprecated
+public class GameRendererOld implements Disposable {
 
     // == attributes ==
     private OrthographicCamera camera;
@@ -40,7 +39,7 @@ public class GameRenderer implements Disposable {
     private BitmapFont font;
     private final GlyphLayout layout = new GlyphLayout();
     private DebugCameraController debugCameraController;
-    private final GameController controller;
+    private final GameControllerOld controller;
     private final AssetManager assetManager;
     private final SpriteBatch batch;
 
@@ -49,7 +48,7 @@ public class GameRenderer implements Disposable {
     private TextureRegion backgroundRegion;
 
     // == constructors ==
-    public GameRenderer(SpriteBatch batch, AssetManager assetManager, GameController controller) {
+    public GameRendererOld(SpriteBatch batch, AssetManager assetManager, GameControllerOld controller) {
         this.batch = batch;
         this.assetManager = assetManager;
         this.controller = controller;
@@ -86,7 +85,7 @@ public class GameRenderer implements Disposable {
             Vector2 screenTouch = new Vector2(Gdx.input.getX(), Gdx.input.getY());
             Vector2 worldTouch = viewport.unproject(new Vector2(screenTouch));
 
-            PlayerSprite player = controller.getPlayer();
+            Player player = controller.getPlayer();
             worldTouch.x = MathUtils.clamp(worldTouch.x, 0, GameConfig.WORLD_WIDTH - player.getWidth());
             player.setX(worldTouch.x);
         }
@@ -123,20 +122,17 @@ public class GameRenderer implements Disposable {
         batch.begin();
 
         //draw background
-//        Background background = controller.getBackground();
-//        batch.draw(backgroundRegion, background.getX(), background.getY(), background.getWidth(), background.getHeight());
+        Background background = controller.getBackground();
+        batch.draw(backgroundRegion, background.getX(), background.getY(), background.getWidth(), background.getHeight());
 
         //draw player
-        PlayerSprite player = controller.getPlayer();
-        player.draw(batch);
-        //batch.draw(playerRegion, player.getX(), player.getY(), player.getWidth(), player.getHeight());
+        Player player = controller.getPlayer();
+        batch.draw(playerRegion, player.getX(), player.getY(), player.getWidth(), player.getHeight());
 
         //draw obstacles
-/*
         for (Obstacle obstacle : controller.getObstacles()) {
             batch.draw(obstacleRegion, obstacle.getX(), obstacle.getY(), obstacle.getWidth(), obstacle.getHeight());
         }
-*/
 
         batch.end();
     }
@@ -160,7 +156,6 @@ public class GameRenderer implements Disposable {
 
     private void renderDebug() {
         viewport.apply();
-        Color oldColor = renderer.getColor().cpy();
         renderer.setProjectionMatrix(camera.combined);
         renderer.begin(ShapeRenderer.ShapeType.Line);
 
@@ -168,16 +163,13 @@ public class GameRenderer implements Disposable {
 
         renderer.end();
 
-        renderer.setColor(oldColor);
-
         ViewportUtils.drawGrid(viewport, renderer);
     }
 
     private void drawDebug() {
-        renderer.setColor(Color.RED);
         controller.getPlayer().drawDebug(renderer);
-//        for (Obstacle obstacle : controller.getObstacles()) {
-//            obstacle.drawDebug(renderer);
-//        }
+        for (Obstacle obstacle : controller.getObstacles()) {
+            obstacle.drawDebug(renderer);
+        }
     }
 }

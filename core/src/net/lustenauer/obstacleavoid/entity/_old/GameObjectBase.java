@@ -1,4 +1,4 @@
-package net.lustenauer.obstacleavoid.entity;
+package net.lustenauer.obstacleavoid.entity._old;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Circle;
  *
  * @author Patric Hollenstein
  */
+@Deprecated
 public abstract class GameObjectBase {
 
     // == attributes ==

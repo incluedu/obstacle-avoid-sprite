@@ -1,4 +1,4 @@
-package net.lustenauer.obstacleavoid.entity;
+package net.lustenauer.obstacleavoid.entity._old;
 
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
@@ -10,6 +10,7 @@ import net.lustenauer.obstacleavoid.config.GameConfig;
  *
  * @author Patric Hollenstein
  */
+@Deprecated
 public class Obstacle extends GameObjectBase implements Pool.Poolable {
 
     private float ySpeed = GameConfig.MEDIUM_OBSTACLE_SPEED;
